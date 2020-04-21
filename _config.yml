@@ -2,7 +2,7 @@
 title:          searabbit – blog
 description:    "Something something..."
 baseurl:        "/jeckyll-blog-test"
-url:            "https://searabbitx.github.io/jeckyll-blog-test"
+url:            "https://searabbitx.github.io/"
 
 # Google Analytics
 # google_analytics: UA—XXXXXXXX-X
