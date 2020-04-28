@@ -3,7 +3,7 @@ layout: post
 title: "Intigriti 2020 Easter XSS challenge writeup"
 ---
 
-This Easter [intigrity](https://www.intigriti.com/) ran an xss challenge. Out of all correct submissions they drew one winner to get a Burp Suite Pro License. I had a lot of fun solving it and I'd love to share some things I've learned about bypassing CSP with you.
+This Easter [intigrity](https://www.intigriti.com/) ran an xss challenge. Out of all correct submissions they drew one winner to get a Burp Suite Pro License. I wasn't the lucky one (congrats [entrophy](https://www.intigriti.com/profile/entrophy)!) but solving this challenge was a lot of fun! so I decided to post this writeup and share some things I've learned about bypassing CSP.
 
 
 # Step 0. The challenge.
