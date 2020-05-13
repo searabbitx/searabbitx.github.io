@@ -7,7 +7,7 @@ So, you're looking for an xss, trying to bypass an html sanitizer with complex b
 
 ## Tip 0. Just try to submit a list of all html tags.
 
-First, if you can submit a lot of text, getting a list all allowed tags can be easy. Just submit a list of all html tags and the sanitizer will politely tell you which ones are allowed simply by preserving them in the result :). If there are any text length limits, you'll have to split it into smaller chunks.
+First, if you can submit a lot of text, getting a list of all allowed tags can be easy. Just submit a list of all html tags and the sanitizer will politely tell you which ones are allowed simply by preserving them in the result :). If there are any text length limits, you'll have to split it into smaller chunks.
 
 You can start with this list:
 
