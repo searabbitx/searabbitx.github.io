@@ -67,4 +67,11 @@
     opacity: .6;
     padding-right: 15px;
   }
+
+  .scroll {
+    pre {
+      max-height: 470px;
+      overflow-y: scroll;
+    }
+  }
 }
