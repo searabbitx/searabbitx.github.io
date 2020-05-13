@@ -3,7 +3,7 @@ layout: post
 title: "Two tips for html sanitizers testing"
 ---
 
-So, you're looking for an xss, trying to bypass an html sanitizer with complex behavior? Here are two things you can start your testing with to grasp a better understanding of how this sanitizer work.
+So, you're looking for an xss, trying to bypass an html sanitizer with complex behavior? Here are two things you can start your testing with to grasp a better understanding of how does this sanitizer work.
 
 ## Tip 0. Just try to submit a list of all html tags.
 
