@@ -137,7 +137,7 @@ You can start with this list:
 {% endhighlight %}
 </div>
 
-## Tip 1. Submit a list of attributes for a given tags.
+## Tip 1. Submit a list of attributes for chosen tags.
 
 Now that we know which tags are allowed without any tricks or complex filter bypasses, let's find out which attributes are allowed for those tags.
 
