@@ -22,7 +22,7 @@ Let's say you've found something that could lead to relfect xss. You can inject 
 ...
 {% endhighlight %}
 
-but you cannot use `(`, `)`, `/`, `<`, `>` and new lines. This actually can happen if our entry point is a part of url's path like `https://www.example.com/foo/OUR_INPUT_HERE/bar/`. In such conditions, we cannot get out of `<script>` and jquery's `$(...)`. So what do we do?
+You want your xss payload to fire without a need of `foo` function being called, but you cannot use `(`, `)`, `/`, `<`, `>` and new lines. This actually can happen if our entry point is a part of url's path like `https://www.example.com/foo/OUR_INPUT_HERE/bar/`. In such conditions, we cannot get out of `<script>` and jquery's `$(...)`. So what do we do?
 
 ## Getting out of foo ...
 
