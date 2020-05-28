@@ -3,7 +3,7 @@ layout: post
 title: "Breaking out of a function context without () and // for XSS"
 ---
 
-Let's say you've found something that could lead to relfect xss. You can inject unescaped characters in a piece of javascript on a page like:
+Let's say you've found something that could lead to relfected xss. You can inject unescaped characters in a piece of javascript on a page, for example:
 
 
 {% highlight html linenos %}
@@ -22,7 +22,7 @@ Let's say you've found something that could lead to relfect xss. You can inject 
 ...
 {% endhighlight %}
 
-You want your xss payload to fire without a need of `foo` function being called, but you cannot use `(`, `)`, `/`, `<`, `>` and new lines. This actually can happen if our entry point is a part of url's path like `https://www.example.com/foo/OUR_INPUT_HERE/bar/`. In such conditions, we cannot get out of `<script>` and jquery's `$(...)`. So what do we do?
+Also, you want your xss payload to fire without a need of `foo` function being called, but you cannot use `(`, `)`, `/`, `<`, `>` and new lines. This can actually happen if our entry point is a part of url's path like `https://www.example.com/foo/OUR_INPUT_HERE/bar/`. In such conditions, we cannot get out of `<script>` and jquery's `$(...)`. So what do we do?
 
 ## Getting out of foo ...
 
