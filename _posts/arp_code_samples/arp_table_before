@@ -1,0 +1,4 @@
+/ # arp -n
+? (10.10.10.12) at 92:01:92:a3:45:be [ether]  on eth0
+? (10.10.10.11) at 6e:fc:07:cd:10:9f [ether]  on eth0
+
