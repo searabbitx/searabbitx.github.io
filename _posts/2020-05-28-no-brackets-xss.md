@@ -85,7 +85,7 @@ we end up with:
             someCode;
             var url = 'www.example.com/'} alert`1`; try {} catch {'';
             someMoreCode;
-        } // <-- this bracket spoils everything :(
+        }
         //...
     });
 ...
