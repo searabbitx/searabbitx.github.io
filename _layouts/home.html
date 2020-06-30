@@ -9,10 +9,14 @@ layout: default
         <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
         <h1 class="catalogue-title">{{ post.title }}</h1>
         <div class="catalogue-line"></div>
-
+        
+        {% if post.lead_words %}
         <p>
-          {{ post.content | strip_html | truncatewords: 30 }}
+          {{ post.content | strip_html | truncatewords: post.lead_words }}
         </p>
+        {% else %}
+          {{ post.content | strip_html | truncatewords: 30 }}
+        {% endif %}
 
       </div>
     </a>
@@ -27,5 +31,11 @@ layout: default
     <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="right arrow">&#8594;</a>
   {% endif %}
 
-  <span>{{ paginator.page }}</span>
+  {% for i in (1..paginator.total_pages) %}
+    {% if i == paginator.page %}
+      <span>{{ i }}</span>
+    {% else %}
+      <span style="opacity: .3;">{{ i }}</span>
+    {% endif %}
+  {% endfor %}
 </div>

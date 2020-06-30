@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Breaking out of a function context without () and // for XSS"
+lead_words: 26
 ---
 
 Let's say you've found something that could lead to relfected xss. You can inject unescaped characters in a piece of javascript on a page, for example:
