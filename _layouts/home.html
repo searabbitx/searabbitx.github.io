@@ -36,11 +36,11 @@ layout: default
       <span style="cursor: default;">{{ i }}</span>
     {% else %}
       {% if i == 1 %}
-        <a href="{{ site.baseurl }}">
+        <a href="{{ '' | prepend: site.baseurl }}">
           <span style="opacity: .3;">{{ i }}</span>
         </a>
       {% else %}
-        <a href="{{ site.baseurl }}/page{{ i }}">
+        <a href="{{ 'page' | append: i | prepend: site.baseurl }}">
           <span style="opacity: .3;">{{ i }}</span>
         </a>
       {% endif %}
