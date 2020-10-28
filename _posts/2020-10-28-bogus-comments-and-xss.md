@@ -4,6 +4,15 @@ title: "Bogus comments and XSS"
 lead_words: 7
 ---
 
+<style>
+
+figure.highlight {
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+</style>
+
 Let's say we have a sanitizer that:
 
 1. Is not based on some HTML Parser
