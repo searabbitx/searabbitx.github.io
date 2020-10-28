@@ -33,9 +33,11 @@ layout: default
 
   {% for i in (1..paginator.total_pages) %}
     {% if i == paginator.page %}
-      <span>{{ i }}</span>
+      <span style="cursor: default;">{{ i }}</span>
     {% else %}
-      <span style="opacity: .3;">{{ i }}</span>
+      <a href="{{ site.baseurl }}/page{{ i }}">
+        <span style="opacity: .3;">{{ i }}</span>
+      </a>
     {% endif %}
   {% endfor %}
 </div>
