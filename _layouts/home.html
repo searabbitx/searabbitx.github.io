@@ -35,9 +35,15 @@ layout: default
     {% if i == paginator.page %}
       <span style="cursor: default;">{{ i }}</span>
     {% else %}
-      <a href="{{ site.baseurl }}/page{{ i }}">
-        <span style="opacity: .3;">{{ i }}</span>
-      </a>
+      {% if i == 1 %}
+        <a href="{{ site.baseurl }}">
+          <span style="opacity: .3;">{{ i }}</span>
+        </a>
+      {% else %}
+        <a href="{{ site.baseurl }}/page{{ i }}">
+          <span style="opacity: .3;">{{ i }}</span>
+        </a>
+      {% endif %}
     {% endif %}
   {% endfor %}
 </div>
