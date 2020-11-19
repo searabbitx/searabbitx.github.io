@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "HTML attributes without spaces"
-lead_words: 7
+lead_words: 18
 ---
 
 <style>
