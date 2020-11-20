@@ -13,14 +13,14 @@ figure.highlight {
 
 </style>
 
-This is just another idea for an xss challenge, that can teach us something new about HTML parsing.
+This is just another idea for an xss challenge that can teach us something new about HTML parsing.
 
 Let's say we need to sneak `<img src onerror="alert(1)">` past a sanitizer that rejects any input if it contains whitespace characters. What can we do in such situation?
 
 <br>
 ### Attributes tokenizing
 
-According to the [WHATWG HTML Spec](https://html.spec.whatwg.org/), after the tokenizer consumes `<img` characters it is in the [tag name state](https://html.spec.whatwg.org/multipage/parsing.html#tag-name-state) and our goal will be to get into the [attribute name state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-name-state) from there. To do it in the intended way we should append our payload with one of these characters:
+According to the [WHATWG HTML Spec](https://html.spec.whatwg.org/), after the tokenizer consumes `<img` characters, it is in the [tag name state](https://html.spec.whatwg.org/multipage/parsing.html#tag-name-state) and our goal will be to get into the [attribute name state](https://html.spec.whatwg.org/multipage/parsing.html#attribute-name-state) from there. To do it in the intended way, we should append our payload with one of these characters:
 
 <div class="filename"><a href="https://html.spec.whatwg.org/multipage/parsing.html#tag-name-state" target="blank">Tag name state 
  | html.spec.whatwg.org</a></div>
@@ -59,7 +59,7 @@ Anything else
     Append the current input character to the current tag token's tag name.
 {% endhighlight %}
 
-`U+002F SOLIDUS (/)` looks interesting, let's see where that leads us.
+`U+002F SOLIDUS (/)` looks interesting. Let's see where that leads us.
 
 
 <br>
@@ -78,7 +78,7 @@ EOF
     This is an eof-in-tag parse error. Emit an end-of-file token.
 ```
 
-which also won't help us even if we could control where the file with our payload ends. 
+which also won't help us, even if we could control where the file with our payload ends.
 
 What about the last option?
 
