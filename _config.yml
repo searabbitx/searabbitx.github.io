@@ -1,7 +1,7 @@
 # Site settings
 title:          searabbit – blog
-description:    "Something something..."
-baseurl:        "/jeckyll-blog-test"
+description:    ""
+baseurl:        "/"
 url:            "https://searabbitx.github.io/"
 
 # Google Analytics
